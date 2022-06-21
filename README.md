@@ -1,4 +1,4 @@
-# World Bank Data Querry Tool
+# World Bank Data Query Tool
 * Multi csv files
 * Transform and Visualize World Bank Data Indicator
   * Panel Data
