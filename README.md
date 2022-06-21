@@ -1,6 +1,11 @@
 # World Bank Data Querry Tool
-Transform and Visualize World Bank Data indicator
-
+* Multi csv files
+* Transform and Visualize World Bank Data Indicator
+  * Panel Data
+  * Time Series Data
+* Time Series Plot
+* Boxplot
+* Heatmap
 ## Requirements
 * python 3.9.12
 * pandas 1.4.2
