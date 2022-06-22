@@ -36,6 +36,7 @@ transformed to:
 #### .multivar_cross_section(year, country_list=None, save_file=False, filename_save=None)
 
 transformed to:
+
 ![image 4](assets/readme_pictures/cross_section_data.PNG)
 
 # Go ahead and
