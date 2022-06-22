@@ -51,6 +51,19 @@ panel_big_four_gdp_per_capita = wb_files.countries_panel_data(key_name='gdp', co
 ts_inflation_gdp_france = wb_files.multivar_time_series('France', save_file=True, filename_save='france_inflation_and_gdp_ts.csv')
 
 
+# create cross sectin data for a year with multivariable
+# for example: 2018 in all country
+
+cs_2019_all_country = wb_files.multivar_cross_section(year=2018, save_file=True, filename_save='all_country_in_2018.csv')
+
+
+# create cross section data for a year with multivariable
+# for example: 2017 in ASEAN
+
+ASEAN = ['Indonesia', 'Malaysia', 'Singapore', 'Thailand', 'Philippines', 'Myanmar', 'Lao PDR', 'Brunei Darussallam', 'Cambodia']
+cs_2017_ASEAN = wb_files.multivar_cross_section(year=2017, country_list=ASEAN, save_file=True, filename_save='ASEAN_in_2017.csv')
+
+
 
 # You also can visualize your data that has created from the object above, 
 # that is inflation time series data of G4 (France, Germany, Italy, and The United Kingdom)

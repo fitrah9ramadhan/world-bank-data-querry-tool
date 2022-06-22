@@ -40,31 +40,63 @@ class WorldBankDataTransform:
         return data
 
     # time series data of a country
-    def multivar_time_series(self, country: str, save_file=True, filename_save=None):
+    def multivar_time_series(self, country: str, save_file=False, filename_save=None):
 
         dct = self.filename
         new_dict = {}
-        lst2 = []
+        lst = []
 
         for (k, v) in dct.items():
             v = self.countries_panel_data(key_name=k, country_list=[country])
             v = v.rename(columns={country: k})
 
             new_dict[k] = v
-            lst2.append(k)
+            lst.append(k)
             
-        df = new_dict[lst2[0]]
-        for i in range(len(lst2)):
+        data = new_dict[lst[0]]
+        for i in range(len(lst)):
             if i == 0:
                 continue
             else:
-                df = df.join(new_dict[lst2[i]])
+                data = data.join(new_dict[lst[i]])
 
         if save_file==True and filename_save != None:
-            df.to_csv(c.SAVE_DATA_PATH+filename_save)
+            data.to_csv(c.SAVE_DATA_PATH+filename_save)
             print(f'your csv file has been saved in {c.SAVE_DATA_PATH} as {filename_save}')
 
-        return df
+        return data
+
+    # cross_section_specific_year
+    def multivar_cross_section(self, year, country_list=None, save_file=True, filename_save=None):
+        dct = self.filename
+        lst = []
+
+        new_dict = {}
+        for (k, v) in dct.items():
+            v = pd.read_csv(c.DATA_PATH+v, skiprows=3)
+            v = v[['Country Name', str(year)]]
+            v = v.rename(columns={'Country Name':'Country'})
+            if country_list != None:
+                v = v[v['Country'].isin(country_list)]
+                
+            v = v.rename(columns={str(year):k})
+            v = v.set_index('Country')
+
+            lst.append(k)
+            new_dict[k] = v
+
+        data = new_dict[lst[0]]
+        for i in range(len(lst)):
+            if i == 0:
+                continue
+            else:
+                data = data.join(new_dict[lst[i]])
+
+        if save_file==True and filename_save != None:
+            data.to_csv(c.SAVE_DATA_PATH+filename_save)
+            print(f'your csv file has been saved in {c.SAVE_DATA_PATH} as {filename_save}')
+
+        return data
 
     def __repr__(self):
         return f"WorldBankDataTransform('{self.filename}')"
