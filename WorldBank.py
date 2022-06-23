@@ -15,7 +15,7 @@ class WorldBankDataTransform:
         WorldBankDataTransform.all.append(self)
     
     # a variable panel data
-    def countries_panel_data(self, key_name: str , country_list: list, save_file=False, filename_save=None):
+    def onevar_panel_data(self, key_name: str , country_list: list, save_file=False, filename_save=None):
 
         if key_name not in self.filename:
             return print(f"{key_name} is not in filename")
@@ -93,6 +93,36 @@ class WorldBankDataTransform:
                 data = data.join(new_dict[lst[i]])
 
         if save_file==True and filename_save != None:
+            data.to_csv(c.SAVE_DATA_PATH+filename_save)
+            print(f'your csv file has been saved in {c.SAVE_DATA_PATH} as {filename_save}')
+
+        return data
+
+    def multivar_panel_data(self, save_file=False, filename_save=None):
+        dct = self.filename
+
+        new_dict = {}
+        lst = []
+        for (k, v) in dct.items():
+            v = pd.read_csv(c.DATA_PATH+v, skiprows=3)
+            v = v.drop(columns=['Indicator Code','Country Code', 'Indicator Name','Unnamed: 66'])
+            v = v.set_index('Country Name').stack(dropna=False)
+            v = pd.DataFrame(v)
+            v = v.reset_index()
+            v = v.rename(columns ={'Country Name':'Country','level_1':'year', 0:k})
+            v = v.set_index(['Country','year'])
+            
+            new_dict[k] = v
+            lst.append(k)
+
+        data = new_dict[lst[0]]
+        for i in range(len(lst)):
+            if i == 0:
+                continue
+            else:
+                data = data.join(new_dict[lst[i]])
+        
+        if save_file == True and filename_save != None:
             data.to_csv(c.SAVE_DATA_PATH+filename_save)
             print(f'your csv file has been saved in {c.SAVE_DATA_PATH} as {filename_save}')
 

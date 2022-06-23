@@ -16,13 +16,24 @@ from worldbank import WorldBankDataTransform, Visualization
 # Download csv data from data.worldbank.org/indicator
 # Get the filename and make it into variable as a string
 #####################################################
-wb_inflation_filename = 'inflation.csv'
-wb_gdp_per_capita_filename = 'gdp-per-capita-constant-US$2015.csv'
+wb_inflation_filename = 'ECN-inflation.csv'
+wb_gdp_per_capita_filename = 'ECN-gdp-per-capita-constant.csv'
 
 
 # Create filename dictionary
 #####################################################
 filename = {'inflation': wb_inflation_filename, 'gdp':wb_gdp_per_capita_filename }
+
+
+# you can also, automatically get all data file name stored in assets/data/ as a dictionary
+# and it can passed to the object class attribute
+
+#
+# uncomment the code below if you want!
+
+# import helper
+# import constant as c
+# filename = helper.get_filename_dict(c.DATA_PATH)
 
 
 # create an object with filename that yv got above
@@ -37,7 +48,7 @@ big_four_country = ['France', 'Germany', 'Italy', 'United Kingdom']
 
 # create panel data of inflation in G4 countries
 #####################################################
-panel_big_four_inflation = wb_files.countries_panel_data(key_name='inflation', country_list=big_four_country, save_file=True, filename_save='big_four_inflation.csv')
+panel_big_four_inflation = wb_files.onevar_panel_data(key_name='inflation', country_list=big_four_country, save_file=True, filename_save='big_four_inflation.csv')
 
 
 # create panel data of gdp per capita in G4 countries
