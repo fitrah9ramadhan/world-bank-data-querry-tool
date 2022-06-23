@@ -6,16 +6,10 @@
   * MultiVariable Time Series Data
   * MultiVariable Cross Section Data
   * MultiVariable Panel Data **(New!)**
-* Visualize your data
-  * Time Series Plot
-  * Boxplot
-  * Heatmap
 
 ## Requirements
 * python 3.9.12
 * pandas 1.4.2
-* matplotlib 3.5.1
-* seaborn 0.11.2
 
 ## WorldBankDataTransform
 
