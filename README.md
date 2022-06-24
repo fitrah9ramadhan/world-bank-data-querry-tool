@@ -105,9 +105,11 @@ Transform world bank csv files into specific year multivariable of countries:
 |      |           |           |     |           |           |
 
 
+``` python:
 all_countries_panel_data = wb_files.multivar_panel_data(save_file=False,
                                                         path=None,
                                                         filename_save=None)
+```                                                        
 
 
 ## How to Save into csv Files
