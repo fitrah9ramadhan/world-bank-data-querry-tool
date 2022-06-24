@@ -84,11 +84,13 @@ Transform world bank csv files into specific year multivariable of countries:
 |      |           |           |     |           |
 
 
+```python:
 world_in_2019 = wb_files.multivar_cross_section(year=2019, 
                                                 country_list=None, 
                                                 save_file=False,
                                                 path=None,
                                                 filename_save=None)
+```                                                
 
 you can also specify country list included in the DataFrame
 i.e 
