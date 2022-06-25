@@ -48,7 +48,9 @@ G4_countries = ['United Kingdom', 'France', 'Germany', 'Italy']
 inflation = "inflation" # csv file name of the variable you want, without '.csv'
 
 G4_countries_inflation = wb_files.onevar_panel_data(key_name=inflation, 
-                                                    country_list=G4_countries, 
+                                                    country_list=G4_countries,
+                                                    start_year = None,
+                                                    end_year = None,
                                                     save_file=False,
                                                     path=None,
                                                     filename_save=None)
@@ -67,7 +69,9 @@ Transform world bank csv files into specific country's multivariable:
 ```python:
 
 country = "Vanuatu"
-vanuatu_time_series = wb_files.multivar_time_series(country=country, 
+vanuatu_time_series = wb_files.multivar_time_series(country=country,
+                                                    start_year = None,
+                                                    end_year = None
                                                     save_file=False,
                                                     path=None,
                                                     filename_save=None)
@@ -108,7 +112,10 @@ Transform world bank csv files into specific year multivariable of countries:
 
 
 ``` python:
-all_countries_panel_data = wb_files.multivar_panel_data(save_file=False,
+all_countries_panel_data = wb_files.multivar_panel_data(country_list=None,
+                                                        start_year = None,
+                                                        end_year = None,
+                                                        save_file=False,
                                                         path=None,
                                                         filename_save=None)
 ```                                                        

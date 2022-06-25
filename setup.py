@@ -5,7 +5,7 @@ with open("README.MD", "r") as fh:
 
 setup(
     name='worldbankdatatransform',
-    version='0.0.1',
+    version='0.0.2',
     description='Transform data.worldbank.org/indicator csv files into one variable panel data, multivariable time series data, multivariable cross section data, or multivariable panel data.',
     py_modules=['worldbankdatatransform'],
     package_dir={'':'src'},

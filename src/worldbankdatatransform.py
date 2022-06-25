@@ -9,7 +9,7 @@ class WorldBankDataTransform:
         self.path = path
 
     # a variable panel data
-    def onevar_panel_data(self, key_name: str , country_list: list, save_file=False, path=None, filename_save=None):
+    def onevar_panel_data(self, key_name: str , country_list: list, start_year=None, end_year=None, start=None, end=None, save_file=False, path=None, filename_save=None):
 
         if key_name not in self.filename:
             return print(f"{key_name} is not in filename")
@@ -25,6 +25,10 @@ class WorldBankDataTransform:
         data.columns = new_header
         data = data.dropna()
         data = data.astype(float)
+
+        if start_year != None and end_year != None:
+            data = data.loc[str(start_year):str(end_year)]
+
         data.index = pd.to_datetime(data.index)
 
         if save_file==True and filename_save != None:
@@ -34,14 +38,14 @@ class WorldBankDataTransform:
         return data
 
     # time series data of a country
-    def multivar_time_series(self, country: str, save_file=False, path=None, filename_save=None):
+    def multivar_time_series(self, country: str, save_file=False, start_year=None, end_year=None, path=None, filename_save=None):
 
         dct = self.filename
         new_dict = {}
         lst = []
 
         for (k, v) in dct.items():
-            v = self.onevar_panel_data(key_name=k, country_list=[country])
+            v = self.onevar_panel_data(key_name=k, country_list=[country], start_year=start_year, end_year=end_year)
             v = v.rename(columns={country: k})
 
             new_dict[k] = v
@@ -92,18 +96,33 @@ class WorldBankDataTransform:
 
         return data
 
-    def multivar_panel_data(self, save_file=False, path=None, filename_save=None):
-        dct = self.filename
+    def multivar_panel_data(self, country_list=None, start_year=None, end_year=None, save_file=False, path=None, filename_save=None):
+        
+    
+        if (start_year != None) and (end_year) != None:
+            columns_in = []
+            for i in range(start_year, end_year+1):
+                columns_in.append(str(i))
+                columns_in.insert(0, "Country Name")
 
+        dct = self.filename
         new_dict = {}
         lst = []
         for (k, v) in dct.items():
             v = pd.read_csv(self.path+'/'+v, skiprows=3)
             v = v.drop(columns=['Indicator Code','Country Code', 'Indicator Name','Unnamed: 66'])
+            
+            if (start_year != None) and (end_year) != None:
+                v = v.drop(columns=[col for col in v if col not in columns_in])
+            
+            if country_list != None:
+                v = v[v['Country Name'].isin(country_list)]
+
             v = v.set_index('Country Name').stack(dropna=False)
             v = pd.DataFrame(v)
             v = v.reset_index()
             v = v.rename(columns ={'Country Name':'Country','level_1':'year', 0:k})
+
             v = v.set_index(['Country','year'])
             
             new_dict[k] = v
@@ -122,7 +141,7 @@ class WorldBankDataTransform:
 
         return data
 
-
+# helper function(s)
 def get_filename_dict(path):
     filename_list = os.listdir(path)
 
