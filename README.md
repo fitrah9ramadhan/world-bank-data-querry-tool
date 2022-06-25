@@ -17,6 +17,14 @@
 pip install worldbankdatatransform
 ```
 
+or
+
+update if you alredy installed it
+
+```python:
+pip install -U worldbankdatatransform
+```
+
 ## How to Use
 
  ```python:
@@ -24,7 +32,7 @@ pip install worldbankdatatransform
 ```
 
 download csv files that you want at data.worldbank.org/indicator and 
-you csv files must stored in a folder with appropriate filename, i.e inflation.csv, constant-gdp.csv
+your csv files must stored in a folder with appropriate filename, i.e inflation.csv, constant-gdp.csv
 
  ```python:
  your_path = 'your csv folder path' ## i.e D:/world-bank/data
